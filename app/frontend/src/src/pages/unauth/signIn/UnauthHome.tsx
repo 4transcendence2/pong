@@ -18,11 +18,11 @@ export default function UnauthHome() {
   //테스트용
 
   const testCreateUserHandler = async () => {
-    const res = await axios.get(`http://10.18.241.128:81/user/create/test`);
+    const res = await axios.get(`http://${import.meta.env.VITE_SERVER_IP}:81/user/create/test`);
     console.log(res);
   }
   const testLoginHandler = async () => {
-    const res = await axios.post(`http://10.18.241.128:81/auth/login/test`, {
+    const res = await axios.post(`http://${import.meta.env.VITE_SERVER_IP}:81/auth/login/test`, {
       username: input,
     });
     if(setSigned) setSigned(true);
