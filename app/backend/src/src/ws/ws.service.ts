@@ -116,6 +116,21 @@ export class WsService {
 				let index = this.users.findIndex(user => user.name === name);
 				if (index !== -1) this.users.splice(index, 1);
 
+				index = this.gameService.rank.findIndex(elem => elem.name === name);
+				if (index !== -1) {
+					this.gameService.rank.splice(index, 1);
+				}
+
+				index = this.gameService.normal.findIndex(elem => elem.name === name);
+				if (index !== -1) {
+					this.gameService.normal.splice(index, 1);
+				}
+				
+				index = this.gameService.arcade.findIndex(elem => elem.name === name);
+				if (index !== -1) {
+					this.gameService.arcade.splice(index, 1);
+				}
+
 			})
 			.catch(err => {
 				console.log('logout error');
