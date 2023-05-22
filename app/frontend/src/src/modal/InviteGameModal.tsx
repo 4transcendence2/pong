@@ -22,8 +22,6 @@ export default function InviteGameModal(props: modalProps) {
   }
 
   const listener = (res: any) => {
-    console.log(res);
-
     setStatus(res.status);
     if (res.status === "error") {
       alert(res.detail);

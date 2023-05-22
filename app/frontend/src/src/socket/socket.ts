@@ -11,7 +11,7 @@ export function setSocket(token: string): Socket {
     },
   });
   // TEST: 로그인 시 소켓 연결 확인용 로그
-  console.log("init", socket);
+  // console.log("init", socket);
   return socket;
 }
 
@@ -24,6 +24,6 @@ export function disconnectSocket() {
   if (socket) {
     socket.disconnect();
     // TEST: 소켓 연결 끊어짐 확인용 로그
-    console.log("disconnect", socket);
+    // console.log("disconnect", socket);
   }
 }

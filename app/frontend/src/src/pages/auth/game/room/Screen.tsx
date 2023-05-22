@@ -87,8 +87,6 @@ export default function Screen(props: PropsType) {
       } else if (res.winner === "red") {
         props.setResult("red 승리");
       }
-    } else {
-      console.log(res);
     }
   };
 

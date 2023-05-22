@@ -40,7 +40,7 @@ function Auth() {
   };
 
   const subListener = (res: { status: string; type: string }) => {
-    console.log("구독", res.type);
+    // console.log("구독", res.type);
     if (res.status === "error") {
       console.log("sub", res);
     } else {
@@ -51,7 +51,7 @@ function Auth() {
   };
 
   const unSubListener = (res: { status: string; type: string }) => {
-    console.log("구독해제", res.type);
+    // console.log("구독해제", res.type);
     if (res.status === "error") {
       console.log("unsub", res);
     }

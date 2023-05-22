@@ -30,7 +30,7 @@ export default function signUp(props: { accessToken: string }) {
         alert("회원가입 완료되었습니다.");
         navigate("/");
       } else {
-        console.log(res);
+        alert("잠시 후 다시 시도해주세요.");
       }
     }
   }
@@ -47,7 +47,7 @@ export default function signUp(props: { accessToken: string }) {
         }
         setFormCheck("이미 존재하는 닉네임입니다.");
       } else {
-        console.log(res);
+        alert("잠시 후 다시 시도해주세요.");
       }
     }
     return false;
