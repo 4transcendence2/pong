@@ -13,7 +13,6 @@ export default function SettingBtn() {
   const { roomId } = useParams();
 
   const listener = (res: ChatRoomResponse) => {
-    console.log(res);
     if (res.roomId !== Number(roomId)) return;
     if (res.status === "approved") {
       alert("설정이 완료되었습니다.");
@@ -40,6 +39,7 @@ export default function SettingBtn() {
 
   const closeModalHandler = () => {
     setShowModal(false);
+    setNotice("");
   };
 
   return (
