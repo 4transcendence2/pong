@@ -46,12 +46,12 @@ function PassWdModal(props: modalProps) {
           <S.Input onChange={setPwHandler} autoFocus type="password" />
         </S.BtnWrapper>
         <S.Span color="red">{props.noti}</S.Span>
-        <S.BtnWrapper>
+        <S.Wrapper>
           <S.ModalButton type="submit"> 확인 </S.ModalButton>
           <S.ModalButton type="button" onClick={props.close}>
             취소
           </S.ModalButton>
-        </S.BtnWrapper>
+        </S.Wrapper>
       </form>
     </S.CreateRoomLayout>
   );

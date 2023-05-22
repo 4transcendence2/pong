@@ -94,18 +94,19 @@ function CreateChatRoomModal(props: modalProps) {
           />
         </S.Wrapper>
         <S.Wrapper>
-          <select onChange={setStatusHandler}>
+          <S.Select onChange={setStatusHandler}>
             <option value="">--채팅방을 설정해주세요--</option>
             <option value="public">공개방</option>
             <option value="private">비공개방</option>
             <option value="protected">비밀번호방</option>
-          </select>
+          </S.Select>
         </S.Wrapper>
         <S.Wrapper>
           <S.Input
             placeholder="비밀번호"
             onChange={setPwHandler}
             disabled={status !== "protected"}
+            type="password"
             value={pwInput}
           />
         </S.Wrapper>

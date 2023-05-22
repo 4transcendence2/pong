@@ -32,6 +32,8 @@ export const Backdrop = styled.div`
 
 export const Modal = styled.dialog`
   width: 40%;
+  max-width: 400px;
+  min-width: 200px;
   ${(props) => (props.id === "noti" ? "height: 220px;" : "")}
   border: none;
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.08);
@@ -64,6 +66,26 @@ export const Span = styled.span`
 export const ModalButton = styled(Button)`
   width: 30%;
   margin-top: 10px;
+`;
+
+export const Select = styled.select`
+  width: 60%;
+  padding: 5px;
+  border: 1.5px solid lightgray;
+  border-radius: 8px;
+  transition: border-color 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  text-align: center;
+  margin-right: 5px;
+  right: 5px;
+`
+
+export const Input = styled.input`
+  width: 60%;
+  padding: 12px 18px 12px;
+  border: 1.5px solid lightgray;
+  border-radius: 8px;
+  transition: border-color 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  margin-right: 5px;
 `;
 
 /* 
@@ -137,15 +159,6 @@ export const CreateRoomLayout = styled.div`
   background: white;
   font-size: 14px;
   border-radius: 20px;
-`;
-
-export const Input = styled.input`
-  width: 60%;
-  padding: 12px 18px 12px;
-  border: 1.5px solid lightgray;
-  border-radius: 8px;
-  transition: border-color 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-  margin-right: 5px;
 `;
 
 /* 

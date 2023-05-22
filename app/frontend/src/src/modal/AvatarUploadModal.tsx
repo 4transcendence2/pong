@@ -86,12 +86,12 @@ function AvatarUploadModal(props: modalProps) {
           />
         </S.SelectImgWrapper>
         <S.SpanDefault color="red">{noti}</S.SpanDefault>
-        <S.BtnWrapper>
+        <S.Wrapper>
           <S.ModalButton type="submit"> 확인 </S.ModalButton>
           <S.ModalButton type="button" onClick={props.close}>
             취소
           </S.ModalButton>
-        </S.BtnWrapper>
+        </S.Wrapper>
       </form>
     </S.AvatarUploadLayout>
   );
