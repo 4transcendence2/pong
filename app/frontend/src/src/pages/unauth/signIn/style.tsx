@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import * as button from "style/button";
 
 export const SignInLayout = styled.div`
   position: relative;
@@ -21,6 +22,7 @@ export const BtnWrapper = styled.div`
 `
 
 export const Button = styled.button`
+  ${button.basicColor}
   display: inline-block;
   padding: 6px 12px;
   border-radius: 5px;

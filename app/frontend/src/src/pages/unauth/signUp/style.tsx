@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import * as button from "style/button";
 
 export const SignUpLayout = styled.div`
   position: relative;
@@ -26,6 +27,7 @@ export const BtnWrapper = styled.div`
 `
 
 export const Button = styled.button`
+  ${button.basicColor}
   display: inline-block;
   padding: 12px 15px 12px;
   border-radius: 5px;
@@ -33,10 +35,6 @@ export const Button = styled.button`
   line-height: 1.5;
   width: 30%;
   margin: 5px;
-`
-
-export const Button1 = styled(Button)`
-  width: 100%;
 `
 
 export const Input = styled.input`
@@ -49,11 +47,6 @@ export const Input = styled.input`
   text-align: center;
 `
 
-export const Input1 = styled(Input)`
-  width: 100%;
-  margin: 5px;
-`
-
 export const Span = styled.span`
   font-size: 11px;
   color: ${props => props.color};
@@ -61,3 +54,11 @@ export const Span = styled.span`
   text-align: start;
 `
 
+export const FullWidthInput = styled(Input)`
+  width: 100%;
+  margin: 5px;
+`
+
+export const FullWidthBtn = styled(Button)`
+  width: 100%;
+`

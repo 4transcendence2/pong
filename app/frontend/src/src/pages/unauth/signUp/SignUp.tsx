@@ -61,11 +61,11 @@ export default function signUp(props: { accessToken: string }) {
             <h2>닉네임 등록</h2>
             <S.InputArea>
               <S.BtnWrapper>
-                <S.Input1 maxLength={10} onChange={onIdHandler}></S.Input1>
+                <S.FullWidthInput maxLength={10} onChange={onIdHandler}></S.FullWidthInput>
               </S.BtnWrapper>
             </S.InputArea>
             <S.BtnWrapper>
-              <S.Button1 onClick={isComplete}>확인</S.Button1>
+              <S.FullWidthBtn onClick={isComplete}>확인</S.FullWidthBtn>
             </S.BtnWrapper>
           </div>
         </form>
