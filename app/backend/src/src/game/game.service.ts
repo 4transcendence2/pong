@@ -85,8 +85,8 @@ export class GameService {
 
 		@Inject(forwardRef(() => WsGateWay))
 		private wsGateway: WsGateWay,
-		
-	) {}
+
+	) { }
 
 	async findOne(id: number): Promise<GameRoom> {
 		return await this.gameRoomRepository.findOne({
@@ -125,8 +125,8 @@ export class GameService {
 	async findHistory(user: User): Promise<GameHistory[]> {
 		return await this.gameHistoryRepository.find({
 			where: [
-				{red: user},
-				{blue: user},
+				{ red: user },
+				{ blue: user },
 			],
 			relations: {
 				red: true,
@@ -139,21 +139,21 @@ export class GameService {
 		return await this.findOne(id) !== null ? true : false;
 	}
 
-	async isExistUser(id:number, client: Socket, name?: string): Promise<boolean> {
+	async isExistUser(id: number, client: Socket, name?: string): Promise<boolean> {
 		const user = await this.userService.findOne(name === undefined ? await this.wsService.findName(client) : name);
 		return await this.findRoomUser(id, user) !== null ? true : false;
 	}
 
 	async findRed(id: number): Promise<string> {
 		const game = await this.findOne(id);
-		for(const user of game.users) {
+		for (const user of game.users) {
 			if (user.role === Role.RED) return user.user.name;
 		}
 	}
 
 	async findBlue(id: number): Promise<string> {
 		const game = await this.findOne(id);
-		for(const user of game.users) {
+		for (const user of game.users) {
 			if (user.role === Role.BLUE) return user.user.name;
 		}
 	}
@@ -191,12 +191,12 @@ export class GameService {
 				clearInterval(intervalId);
 				let index = this.invitationList.findIndex(elem => elem.from === from.name);
 				this.invitationList.splice(index, 1);
-				
+
 				let newGame = this.gameRoomRepository.create({
 					rule: body.rule,
 				});
 				await this.gameRoomRepository.save(newGame);
-				
+
 				client.emit('inviteGameResult', {
 					username: to.name,
 					status: 'accept',
@@ -275,7 +275,7 @@ export class GameService {
 		invitation.status = 'accept';
 		invitation.toClient = client;
 	}
-	
+
 	async declineGame(client: Socket, body: any) {
 		client.emit('declineGameResult', {
 			username: body.username,
@@ -292,7 +292,7 @@ export class GameService {
 		if (rule === Rule.RANK) {
 			this.rank.push({
 				client: client,
-				id : client.id,
+				id: client.id,
 				name: name
 			})
 		}
@@ -300,7 +300,7 @@ export class GameService {
 		if (rule === Rule.NORMAL) {
 			this.normal.push({
 				client: client,
-				id : client.id,
+				id: client.id,
 				name: name
 			})
 		}
@@ -308,7 +308,7 @@ export class GameService {
 		if (rule === Rule.ARCADE) {
 			this.arcade.push({
 				client: client,
-				id : client.id,
+				id: client.id,
 				name: name
 			})
 		}
@@ -354,7 +354,7 @@ export class GameService {
 			user: user,
 			role: Role.SPECTATOR
 		});
-		await this.gameRoomUserRepository.save(newGmaeRoomUser); 
+		await this.gameRoomUserRepository.save(newGmaeRoomUser);
 		this.updateSpectator(game.id, client);
 	}
 
@@ -373,7 +373,7 @@ export class GameService {
 
 		let list: {
 			username: string,
-		} [] = [];
+		}[] = [];
 
 		for (const roomUser of roomUsers) {
 			list.push({
@@ -400,12 +400,12 @@ export class GameService {
 		const user = await this.userService.findOne(await this.wsService.findName(client));
 		const game = await this.findOne(body.roomId);
 
-		
+
 		const gameRoomUser = await this.findRoomUser(game.id, user);
 		await this.gameRoomUserRepository.remove(gameRoomUser);
-		
+
 		await this.userService.updateStatus(user.name, UserStatus.LOGIN);
-		
+
 		client.emit('exitGameRoomResult', {
 			status: 'approved',
 			roomId: game.id,
@@ -456,23 +456,33 @@ export class GameService {
 		const winner = game.redScore === 5 ? 'red' : 'blue';
 
 		if (winner === 'red') {
-			redClient.emit('message', {
-				type: 'win',
-				roomId: game.roomId,
-			})
-			blueClient.emit('message', {
-				type: 'lose',
-				roomId: game.roomId,
-			})
+			if (redClient !== undefined) {
+				redClient.emit('message', {
+					type: 'win',
+					roomId: game.roomId,
+				})
+			}
+
+			if (blueClient !== undefined) {
+				blueClient.emit('message', {
+					type: 'lose',
+					roomId: game.roomId,
+				})
+			}
 		} else {
-			redClient.emit('message', {
-				type: 'lose',
-				roomId: game.roomId,
-			})
-			blueClient.emit('message', {
-				type: 'win',
-				roomId: game.roomId,
-			})
+			if (redClient !== undefined) {
+				redClient.emit('message', {
+					type: 'lose',
+					roomId: game.roomId,
+				})
+			}
+
+			if (blueClient !== undefined) {
+				blueClient.emit('message', {
+					type: 'win',
+					roomId: game.roomId,
+				})
+			}
 		}
 
 		const gameRoom = await this.findOne(game.roomId);
@@ -625,7 +635,7 @@ export class GameService {
 				if (game.ball2Y + game.dy2 < game.ball2Radius || game.ball2Y + game.dy2 > 350) game.dy2 *= -1;
 
 				if (game.ball2X + game.dx2 < game.ball2Radius) {
-				
+
 					if (game.redPaddleY < game.ball2Y && game.ball2Y < game.redPaddleY + game.redPaddleHeight) // 레드 사이드
 						game.dx2 *= -1;
 					else {
@@ -633,7 +643,7 @@ export class GameService {
 						this.initGame(game);
 					}
 				}
-	
+
 				if (game.ball2X + game.dx2 > 530) { // 블루 사이드
 					if (game.bluePaddleY < game.ball2Y && game.ball2Y < game.bluePaddleY + game.bluePaddleHeight)
 						game.dx2 *= -1;
@@ -647,7 +657,7 @@ export class GameService {
 			if (game.ballY + game.dy < game.ballRadius || game.ballY + game.dy > 350) game.dy *= -1;
 
 			if (game.ballX + game.dx < game.ballRadius) {
-				
+
 				if (game.redPaddleY < game.ballY && game.ballY < game.redPaddleY + game.redPaddleHeight) // 레드 사이드
 					game.dx *= -1;
 				else {
@@ -684,7 +694,7 @@ export class GameService {
 		if (role === 'blue') {
 			if (room.bluePaddleY <= 0)
 				return;
-			room.bluePaddleY -= 10; 
+			room.bluePaddleY -= 10;
 		}
 
 	}
@@ -755,27 +765,27 @@ export class GameService {
 				}
 
 				this.play(newGame.id, newGame.rule, user1.name, user2.name);
-			} 
-			
+			}
+
 			if (this.normal.length > 1) {
 				let user1 = await this.userService.findOne(this.normal[0].name);
 				let user2 = await this.userService.findOne(this.normal[1].name);
 				let client1 = this.normal[0].client;
 				let client2 = this.normal[1].client;
-				
+
 				this.normal.splice(0, 2);
-				
+
 				let newGame = this.gameRoomRepository.create({
 					rule: Rule.NORMAL,
 				});
 				await this.gameRoomRepository.save(newGame);
-				
+
 				let newGameUser1 = this.gameRoomUserRepository.create({
 					room: newGame,
 					user: user1,
 					role: Role.RED,
 				});
-				
+
 				let newGameUser2 = this.gameRoomUserRepository.create({
 					room: newGame,
 					user: user2,
@@ -809,20 +819,20 @@ export class GameService {
 				let user2 = await this.userService.findOne(this.arcade[1].name);
 				let client1 = this.arcade[0].client;
 				let client2 = this.arcade[1].client;
-				
+
 				this.arcade.splice(0, 2);
-				
+
 				let newGame = this.gameRoomRepository.create({
 					rule: Rule.ARCADE,
 				});
 				await this.gameRoomRepository.save(newGame);
-				
+
 				let newGameUser1 = this.gameRoomUserRepository.create({
 					room: newGame,
 					user: user1,
 					role: Role.RED,
 				});
-				
+
 				let newGameUser2 = this.gameRoomUserRepository.create({
 					room: newGame,
 					user: user2,
