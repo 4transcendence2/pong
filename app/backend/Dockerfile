@@ -11,4 +11,4 @@ ENV LC_ALL=C.UTF-8
 COPY .	/home
 WORKDIR /home/src
 RUN npm i
-CMD npm run start:dev
+CMD npm run start
