@@ -22,8 +22,6 @@ export default function InviteGameModal(props: modalProps) {
   }
 
   const listener = (res: any) => {
-    console.log(res);
-
     setStatus(res.status);
     if (res.status === "error") {
       alert(res.detail);
@@ -68,12 +66,12 @@ export default function InviteGameModal(props: modalProps) {
       <h2>{props.targetUser} 에게 게임 신청 하기</h2>
       <form onSubmit={setHandler}>
         <S.Wrapper>
-          <select onChange={setStatusHandler} disabled={status === "waiting"}>
+          <S.Select onChange={setStatusHandler} disabled={status === "waiting"}>
             <option value="opt">-- 옵션을 선택해주세요 --</option>
             <option value="normal">일반 게임</option>
             <option value="rank">랭크 게임</option>
             <option value="arcade">특별 게임</option>
-          </select>
+          </S.Select>
         </S.Wrapper>
         <S.Wrapper>
           <S.SpanAbsolute color="red">{notice}</S.SpanAbsolute>

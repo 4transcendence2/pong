@@ -60,20 +60,20 @@ export default function SettingPwModal(props: modalProps) {
     <S.SettingPwLayout>
       <h2>{target.get("title")} 채팅방 비밀번호 설정</h2>
       <form onSubmit={setHandler}>
-        <select onChange={setStatusHandler}>
+        <S.Select onChange={setStatusHandler}>
           <option value="opt">-- 옵션을 선택해주세요 --</option>
           <option value="change">비밀번호 변경</option>
           <option value="set">비밀번호 설정하기</option>
           <option value="remove">비밀번호 설정취소</option>
-        </select>
+        </S.Select>
         <S.Wrapper>
-          <S.Input onChange={setPwHandler} value={pwInput} disabled={disable} />
+          <S.Input onChange={setPwHandler} type="password" value={pwInput} disabled={disable} />
         </S.Wrapper>
         <S.Span color="red">{props.notice}</S.Span>
-        <S.BtnWrapper>
-          <S.Button type="submit">확인</S.Button>
-          <S.Button type="button" onClick={props.close}>취소</S.Button>
-        </S.BtnWrapper>
+        <S.Wrapper>
+          <S.ModalButton type="submit">확인</S.ModalButton>
+          <S.ModalButton type="button" onClick={props.close}>취소</S.ModalButton>
+        </S.Wrapper>
       </form>
     </S.SettingPwLayout>
   );

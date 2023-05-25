@@ -52,7 +52,6 @@ if (window.location.href === `http://${import.meta.env.VITE_SERVER_IP}/signin`) 
         alert("이미 접속중 입니다.");
         navigate("/");
       } else {
-        console.log(res);
         alert("잠시 후에 다시 시도해주세요.");
         navigate("/");
       } 

@@ -43,7 +43,7 @@ export default function UnauthHome() {
       <S.FormLogo>
         <RiPingPongFill size={55} />
       </S.FormLogo>
-      <h1>hello pongpong</h1>
+      <h1>Hello pongpong</h1>
       <S.BtnWrapper>
         <S.Button onClick={startHandler}>시작하기</S.Button>
       </S.BtnWrapper>

@@ -29,7 +29,6 @@ export default function OtpCheck(props: { username: string; accessToken: string;
         });
         navigate("/");
       } else {
-        console.log(res);
         setNoticeFail("인증번호를 확인해주세요.");
       }
     } else {

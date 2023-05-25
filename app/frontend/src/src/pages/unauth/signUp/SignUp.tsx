@@ -30,7 +30,7 @@ export default function signUp(props: { accessToken: string }) {
         alert("회원가입 완료되었습니다.");
         navigate("/");
       } else {
-        console.log(res);
+        alert("잠시 후 다시 시도해주세요.");
       }
     }
   }
@@ -47,7 +47,7 @@ export default function signUp(props: { accessToken: string }) {
         }
         setFormCheck("이미 존재하는 닉네임입니다.");
       } else {
-        console.log(res);
+        alert("잠시 후 다시 시도해주세요.");
       }
     }
     return false;
@@ -61,11 +61,11 @@ export default function signUp(props: { accessToken: string }) {
             <h2>닉네임 등록</h2>
             <S.InputArea>
               <S.BtnWrapper>
-                <S.Input1 maxLength={10} onChange={onIdHandler}></S.Input1>
+                <S.FullWidthInput maxLength={10} onChange={onIdHandler}></S.FullWidthInput>
               </S.BtnWrapper>
             </S.InputArea>
             <S.BtnWrapper>
-              <S.Button1 onClick={isComplete}>확인</S.Button1>
+              <S.FullWidthBtn onClick={isComplete}>확인</S.FullWidthBtn>
             </S.BtnWrapper>
           </div>
         </form>
