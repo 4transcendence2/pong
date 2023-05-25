@@ -5,6 +5,7 @@ import { getAvatar } from "api/user";
 import { getSocket } from "socket/socket";
 import { JoinExitResponse } from "socket/active/gameEventType";
 import * as S from "./style";
+import { getUsername } from "userAuth";
 
 type GameItemProps = {
   no: number;
@@ -17,11 +18,15 @@ type GameItemProps = {
 export default function GameItem({ no, roomId, rule, p1, p2 }: GameItemProps) {
   const navigate = useNavigate();
   const socket = getSocket();
+  const name = getUsername();
 
   function joinGameRoomListener(res: JoinExitResponse) {
     if (res.roomId !== roomId) return;
     if (res.status === "approved") navigate(`/game/${roomId}`);
-    else console.log(res.detail);
+    else {
+      if (res.detail === "이미 참여중입니다.") navigate(`/game/${roomId}`);
+      console.log(res.detail);
+    }
   }
 
   useEffect(() => {
@@ -58,7 +63,7 @@ export default function GameItem({ no, roomId, rule, p1, p2 }: GameItemProps) {
       <S.GameHeaderBox>
         <S.No>{no}</S.No>
         <S.Rule>🚩 {rule}</S.Rule>
-        <S.EntryBtn onClick={onJoinGameRoom}>관전</S.EntryBtn>
+        <S.EntryBtn onClick={onJoinGameRoom}>{(p1 === name || p2 === name) ? "재참가" : "관전"}</S.EntryBtn>
       </S.GameHeaderBox>
       <S.PlayersBox>
         <S.PlayerBox>
