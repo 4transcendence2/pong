@@ -335,19 +335,19 @@ export class UserService {
 
 
 	// test code
-	async createTest() {
-		const defaultAvatar = await fs.readFileSync(join(__dirname, '../..', 'public', 'default.png'), (err) => {
-			if (err) console.log(err, "기본 아바타 파일 이상");
-		});
-		for (let i = 1; i < 10; ++i) {
-			let newUser = this.usersRepository.create({
-				name: i.toString(),
-				intra_id: i.toString(),
-				avatar: defaultAvatar,
-			});
-			await this.usersRepository.save(newUser);
-		}
-	}
+	// async createTest() {
+	// 	const defaultAvatar = await fs.readFileSync(join(__dirname, '../..', 'public', 'default.png'), (err) => {
+	// 		if (err) console.log(err, "기본 아바타 파일 이상");
+	// 	});
+	// 	for (let i = 1; i < 10; ++i) {
+	// 		let newUser = this.usersRepository.create({
+	// 			name: i.toString(),
+	// 			intra_id: i.toString(),
+	// 			avatar: defaultAvatar,
+	// 		});
+	// 		await this.usersRepository.save(newUser);
+	// 	}
+	// }
 
 
 }

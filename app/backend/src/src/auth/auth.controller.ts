@@ -20,21 +20,21 @@ export class AuthController {
 	}
 
 	// test code
-	@Post('login/test')
-	async loginTest(@Body() body) {
-		const username = body.username;
+	// @Post('login/test')
+	// async loginTest(@Body() body) {
+	// 	const username = body.username;
 
-		if (0 < parseInt(username) && parseInt(username) < 10) {
-			console.log(body.username)
-			return ({
-				accessToken: this.authService.publishToken(body.username, body.username),
-			});
-		} else {
-			return ({
-				accessToken: 'error',
-			})
-		}
-	}
+	// 	if (0 < parseInt(username) && parseInt(username) < 10) {
+	// 		console.log(body.username)
+	// 		return ({
+	// 			accessToken: this.authService.publishToken(body.username, body.username),
+	// 		});
+	// 	} else {
+	// 		return ({
+	// 			accessToken: 'error',
+	// 		})
+	// 	}
+	// }
 
 	@Get('exist/:name')
 	async isExist(@Param('name') name: string, @Res() res: Response) {
