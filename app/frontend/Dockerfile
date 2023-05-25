@@ -13,4 +13,5 @@ WORKDIR /home/src
 RUN npm i
 EXPOSE 3000
 HEALTHCHECK --interval=3m --timeout=3s --retries=3 CMD curl -f http://localhost || exit 1
-CMD npm run dev -- --port 3000 --host 0.0.0.0
+CMD npm run build && npm run preview -- --port 3000 --host 0.0.0.0
+# CMD npm run dev -- --port 3000 --host 0.0.0.0
