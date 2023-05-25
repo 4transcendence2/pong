@@ -47,11 +47,11 @@ export default function UnauthHome() {
       <S.BtnWrapper>
         <S.Button onClick={startHandler}>시작하기</S.Button>
       </S.BtnWrapper>
-      <S.BtnWrapper>
+      {/* <S.BtnWrapper>
         <S.Button onClick={testCreateUserHandler}>테스트용 아이디만들기</S.Button>
         <S.Input onChange={onInputHandler} />
         <S.Button onClick={testLoginHandler}>테스트용 로그인</S.Button>
-      </S.BtnWrapper>
+      </S.BtnWrapper> */}
     </S.SignInLayout>
   );
 }
