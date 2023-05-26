@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getProfile, getAvatar } from "api/user";
 import { getUsername } from "userAuth";
 import useNotiModal from "hooks/useNotiModal";
@@ -7,9 +7,15 @@ import { ProfileContext } from "hooks/context/ProfileContext";
 import { MyProfileLayout } from "./style";
 import { UserItem } from "./user/style";
 import * as S from "./user/style";
+import { getSocket } from "socket/socket";
+import { useLocation } from "react-router-dom";
 
 export default function MyProfile() {
   const username = getUsername();
+  const socket = getSocket();
+  const location = useLocation();
+  const queryClient = useQueryClient();
+  const [gameResult, setGameResult] = useState("");
   const profileQuery = useQuery({
     queryKey: ["profile", username],
     queryFn: () => {
@@ -23,9 +29,36 @@ export default function MyProfile() {
     },
     enabled: !!username,
   });
+
+  const listener = (res: any) => {
+    const targets = location.pathname.split("/");
+    if (targets[1] !== "game" || Number.isNaN(Number(targets[2]))) {
+      if (res.type === "win" || res.type === "lose") {
+        setGameResult(res.type);
+      }
+    }
+  };
+
+  useEffect(() => {
+    socket.on("message", listener);
+    return () => {
+      socket.off("message", listener);
+    };
+  }, []);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      queryClient.invalidateQueries(["profile", username]);
+    }, 300);
+    return () => {
+      clearTimeout(id);
+      setGameResult("");
+    };
+  }, [gameResult]);
+
   const setProfileUser = useContext(ProfileContext);
   const { showNotiModal, NotiModal, onOpenNotiModal, newNoti } = useNotiModal(
-    profileQuery?.data?.status,
+    profileQuery?.data?.status
   );
   if (profileQuery.isLoading) return <UserItem />;
 
