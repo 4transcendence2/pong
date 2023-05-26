@@ -775,7 +775,7 @@ export class ChatService {
 	async setPassword(server: Server, client: Socket, body: any) {
 		let room = await this.findOne(body.roomId);
 		room.status = RoomStatus.PROTECTED;
-		room.password = body.password;
+		room.password = await bcrypt.hash(body.password, parseInt(process.env.HASH_KEY));
 
 		client.emit('setPasswordResult', {
 			status: 'approved',
