@@ -102,6 +102,7 @@ function Auth() {
                   <Route path="/game/list" element={<GameList />} />
                   <Route path="/chat/:roomId" element={<ChatRoom />} />
                   <Route path="/game/:gameId" element={<GameRoom />} />
+                  <Route path="/signin" element={<Main />} />
                   <Route path="/*" element={<NotFound />} />
                 </Routes>
               </S.PageLayout>
