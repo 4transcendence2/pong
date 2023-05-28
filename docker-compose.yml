@@ -10,9 +10,6 @@ services:
       - ./.env
     ports:
       - 80:3000
-    volumes:
-      - front:/home/src
-      - /home/src/node_modules
 
   backend:
     image: backend
@@ -24,10 +21,6 @@ services:
       - ./.env
     ports:
       - 81:80
-    volumes:
-      - back:/home/src
-      - /home/src/node_modules
-
 
   postgresql:
     image: postgres
@@ -42,18 +35,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-
-volumes:
-  front:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${PWD}/app/frontend/src
-  back:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${PWD}/app/backend/src
