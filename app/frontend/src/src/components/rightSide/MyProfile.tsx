@@ -48,7 +48,7 @@ export default function MyProfile() {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      queryClient.invalidateQueries(["profile", username]);
+      queryClient.refetchQueries(["profile", username]);
     }, 300);
     return () => {
       clearTimeout(id);

@@ -212,7 +212,7 @@ export class WsService {
 			}
 
 			// gameRoom
-			if (body.type === Type.CHAT_ROOM) {
+			if (body.type === Type.GAME_ROOM) {
 				await client.leave('gameRoom' + body.roomId);
 			}
 
