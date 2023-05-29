@@ -42,6 +42,9 @@ export default function MatchGameModal(props: modalProps) {
   const cancelListener = (res: ResponseType) => {
     if (res.status === "approved") {
       props.close();
+    } else {
+      console.log(res);
+      props.close();
     }
   };
 
