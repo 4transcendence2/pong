@@ -94,7 +94,7 @@ export class UserController {
 	}
 
 
-	@UseGuards(SignupJwtGuard)
+	// @UseGuards(SignupJwtGuard)
 	@Post('create')
 	async createUser(@Request() req, @Body() info: CreateUserDto, @Res() res: Response) {
 		try {

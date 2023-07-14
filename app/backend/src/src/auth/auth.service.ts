@@ -23,40 +23,103 @@ export class AuthService {
 		private jwtService: JwtService,
 	) {}
 
-	async login(code: string, res: Response) {
-		const token = await this.getAccessToken(code);
-		if (token === 'error') {
-			res.status(401);
+	// async login(code: string, res: Response) {
+	// 	const token = await this.getAccessToken(code);
+	// 	if (token === 'error') {
+	// 		res.status(401);
+	// 		return res.json({
+	// 			status: 'error',
+	// 			detail: 'Invalid Code',
+	// 		});
+	// 	}
+
+	// 	const intraId = await this.getIntraId(token);
+	// 	if (intraId === 'error') {
+	// 		res.status(500);
+	// 		return res.json({
+	// 			status: 'error',
+	// 			detail: '42 API server is sick. Try later',
+	// 		});
+	// 	}
+
+	// 	const user = await this.userService.findOneByIntra(intraId);
+
+
+	// 	// 해당 intraId로 가입된 유저가 아닌경우
+	// 	if (user === null) {
+	// 		return res.json({
+	// 			status: 'approved',
+	// 			detail: 'signup',
+	// 			accessToken: await this.signupJwtService.publish(token, intraId),
+	// 		})
+	// 	}
+
+
+	// 	// 이미 로그인 중인 유저인 경우
+	// 	if (await this.wsService.isLogin(undefined, user.name)) {
+	// 		res.status(409);
+	// 		return res.json({
+	// 			status: 'error',
+	// 			detail: 'Duplication Login',
+	// 		});
+	// 	}
+
+
+	// 	// 2FA 미사용 유저인 경우
+	// 	if (user.tfa === false) {
+	// 		return res.json({
+	// 			status: 'approved',
+	// 			username: user.name,
+	// 			accessToken: this.publishToken(intraId, user.name),
+	// 		})
+	// 	}
+
+
+
+	// 	// 2FA 사용 유저인 경우
+	// 	if (user.tfa === true) {
+	// 		try {
+	// 			await this.sendOtp(user.phone);
+	// 			return res.json({
+	// 				status: 'published',
+	// 				detail: '2fa',
+	// 				username: user.name,
+	// 				accessToken: this.tempJwtService.publish(intraId, user.name, user.phone, false),
+	// 			})
+	// 		} catch(err) {
+	// 			res.status(500);
+	// 			return res.json({
+	// 				status: 'error',
+	// 				detail: 'OTP API server is sick. Try later.',
+	// 				content: err.message,
+	// 			})
+	// 		}
+	// 	}
+	// }
+	async login(username: string, res: Response) {
+		// 프로퍼티 확인
+
+		if (!username) {
+			res.status(400);
 			return res.json({
 				status: 'error',
-				detail: 'Invalid Code',
+				detail: 'Invalid username property',
 			});
 		}
 
-		const intraId = await this.getIntraId(token);
-		if (intraId === 'error') {
-			res.status(500);
+		const user = await this.userService.findOne(username);
+
+		// 없는 유저인경우
+		if (!user) {
+			res.status(404);
 			return res.json({
-				status: 'error',
-				detail: '42 API server is sick. Try later',
+				status: "error",
+				detail: "Not exist user",
 			});
 		}
-
-		const user = await this.userService.findOneByIntra(intraId);
-
-
-		// 해당 intraId로 가입된 유저가 아닌경우
-		if (user === null) {
-			return res.json({
-				status: 'approved',
-				detail: 'signup',
-				accessToken: await this.signupJwtService.publish(token, intraId),
-			})
-		}
-
 
 		// 이미 로그인 중인 유저인 경우
-		if (await this.wsService.isLogin(undefined, user.name)) {
+		if (await this.wsService.isLogin(undefined, username)) {
 			res.status(409);
 			return res.json({
 				status: 'error',
@@ -70,11 +133,9 @@ export class AuthService {
 			return res.json({
 				status: 'approved',
 				username: user.name,
-				accessToken: this.publishToken(intraId, user.name),
+				accessToken: this.publishToken("sumsong", user.name),
 			})
 		}
-
-
 
 		// 2FA 사용 유저인 경우
 		if (user.tfa === true) {
@@ -84,7 +145,7 @@ export class AuthService {
 					status: 'published',
 					detail: '2fa',
 					username: user.name,
-					accessToken: this.tempJwtService.publish(intraId, user.name, user.phone, false),
+					accessToken: this.tempJwtService.publish("sumsong", user.name, user.phone, false),
 				})
 			} catch(err) {
 				res.status(500);

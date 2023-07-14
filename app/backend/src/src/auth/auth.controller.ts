@@ -14,9 +14,14 @@ export class AuthController {
 		private userService: UserService,
 	) {}
 
-	@Get('login/:code')
-	async login(@Param('code') code: string, @Res() res: Response) {
-		return await this.authService.login(code, res);
+	// @Get('login/:code')
+	// async login(@Param('code') code: string, @Res() res: Response) {
+	// 	return await this.authService.login(code, res);
+	// }
+
+	@Get('login')
+	async login(@Body() info: {username: string }, @Res() res: Response) {
+		return await this.authService.login(info.username, res);
 	}
 
 	// test code
