@@ -98,12 +98,14 @@ export class UserController {
 	@Post('create')
 	async createUser(@Request() req, @Body() info: CreateUserDto, @Res() res: Response) {
 		try {
-			await this.userService.createUser(req.user.intraId, info.username);
+			// await this.userService.createUser(req.user.intraId, info.username);
+			await this.userService.createUser(info.intraId, info.username);
 			res.status(201);
 			return res.json({
 				status: 'approved',
 				detail: "User is created",
-				accessToken: this.authService.publishToken(req.user.intraId, info.username),
+				accessToken: this.authService.publishToken(info.intraId, info.username),
+				// accessToken: this.authService.publishToken(req.user.intraId, info.username),
 			})
 		} catch (error) {
 			res.status(400);
