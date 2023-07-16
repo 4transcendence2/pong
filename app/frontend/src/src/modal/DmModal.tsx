@@ -5,6 +5,7 @@ import { useOutsideClick } from "hooks/useOutsideClick";
 import LoadingCircle from "components/LoadingCircle";
 import * as S from "modal/layout/style";
 import * as T from "socket/passive/friendDmListType";
+import { useQueryClient } from "@tanstack/react-query";
 
 type DmModalProps = {
   targetUser: string;
@@ -18,6 +19,7 @@ export default function DmModal({ targetUser, onClose }: DmModalProps) {
   const [input, handler, reset] = useInput("");
   const listRef: React.RefObject<HTMLUListElement> = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
   let key = 0;
   useOutsideClick({ modalRef, onClose });
 
@@ -28,7 +30,10 @@ export default function DmModal({ targetUser, onClose }: DmModalProps) {
       });
       setIsLoading(false);
     } else if (res.type === "dm") {
-      setDmChat((prevChat) => [...prevChat, { from: res.from, content: res.content }]);
+      setDmChat((prevChat) => [
+        ...prevChat,
+        { from: res.from, content: res.content },
+      ]);
     }
   }
 
@@ -80,7 +85,9 @@ export default function DmModal({ targetUser, onClose }: DmModalProps) {
     <S.DmLayout ref={modalRef}>
       <S.DmHeader>
         <S.DmTitle>{targetUser}님과의 다이렉트 메시지</S.DmTitle>
-        <S.IconWrapper onClick={onClose as unknown as React.MouseEventHandler<Element>}>
+        <S.IconWrapper
+          onClick={onClose as unknown as React.MouseEventHandler<Element>}
+        >
           <S.CloseIcon />
         </S.IconWrapper>
       </S.DmHeader>
@@ -104,7 +111,12 @@ export default function DmModal({ targetUser, onClose }: DmModalProps) {
         )}
       </S.DmChatList>
       <S.InputBox onSubmit={onSend}>
-        <S.DmInput disabled={isLoading} id="input" value={input} onChange={handler} />
+        <S.DmInput
+          disabled={isLoading}
+          id="input"
+          value={input}
+          onChange={handler}
+        />
         <S.IconWrapper>
           <S.SendBtn />
         </S.IconWrapper>

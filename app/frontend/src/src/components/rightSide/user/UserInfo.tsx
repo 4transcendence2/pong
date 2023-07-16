@@ -14,10 +14,24 @@ import * as S from "./style";
 import InviteGameModal from "modal/InviteGameModal";
 import useGameModal from "hooks/useGameModal";
 
-export default function UserInfo({ listOf, username, subLine, userStatus }: T.UserInfoProps) {
+export default function UserInfo({
+  listOf,
+  username,
+  subLine,
+  userStatus,
+}: T.UserInfoProps) {
   const me = getUsername() === username;
-  const { onDropOpen, onDropClose, dropIsOpen } = useDropModal({ listOf, username });
+  const { onDropOpen, onDropClose, dropIsOpen } = useDropModal({
+    listOf,
+    username,
+  });
   const { Modal, isOpen, onOpen, onClose } = useModal();
+  const onCloseDmModal = (e: MouseEvent) => {
+    onClose(e);
+    queryClient.refetchQueries({
+      queryKey: ["list", "dm"],
+    });
+  };
   const { isMouseEnter, onLeave } = useMouseOver({ listOf, user: username });
   const queryClient = useQueryClient();
   const socket = getSocket();
@@ -59,7 +73,12 @@ export default function UserInfo({ listOf, username, subLine, userStatus }: T.Us
   switch (listOf) {
     case "dm":
       return (
-        <S.UserItem key={username} id={username + "info"} clickable onClick={onDmOpen}>
+        <S.UserItem
+          key={username}
+          id={username + "info"}
+          clickable
+          onClick={onDmOpen}
+        >
           {avatarQuery.isLoading ? (
             <S.LoadingImg />
           ) : (
@@ -71,7 +90,7 @@ export default function UserInfo({ listOf, username, subLine, userStatus }: T.Us
           {isMouseEnter && <S.ExitDmIcon onClick={onDmExit} />}
           {isOpen && (
             <Modal key={username}>
-              <DmModal targetUser={username} onClose={onClose} />
+              <DmModal targetUser={username} onClose={onCloseDmModal} />
             </Modal>
           )}
         </S.UserItem>
@@ -87,7 +106,11 @@ export default function UserInfo({ listOf, username, subLine, userStatus }: T.Us
           )}
           <S.UserInfoText>
             {username}{" "}
-            {userStatus?.oper === "owner" ? "👑" : userStatus?.oper === "admin" ? "🎩" : ""}
+            {userStatus?.oper === "owner"
+              ? "👑"
+              : userStatus?.oper === "admin"
+              ? "🎩"
+              : ""}
             {userStatus?.muted ? " 🤐" : ""} {userStatus?.blocked ? " 🚫" : ""}
             <br />
             {subLine}
@@ -105,16 +128,17 @@ export default function UserInfo({ listOf, username, subLine, userStatus }: T.Us
           )}
           {isOpen && (
             <Modal key={username}>
-              <DmModal targetUser={username} onClose={onClose} />
+              <DmModal targetUser={username} onClose={onCloseDmModal} />
             </Modal>
           )}
-          {
-            InviteGame.isOpen && (
-              <InviteGame.GameModal key={username}>
-                <InviteGameModal targetUser={username} close={InviteGame.onClose} />
-              </InviteGame.GameModal>
-            )
-          }
+          {InviteGame.isOpen && (
+            <InviteGame.GameModal key={username}>
+              <InviteGameModal
+                targetUser={username}
+                close={InviteGame.onClose}
+              />
+            </InviteGame.GameModal>
+          )}
         </S.UserItem>
       );
   }
