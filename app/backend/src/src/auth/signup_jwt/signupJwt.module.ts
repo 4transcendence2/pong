@@ -4,6 +4,7 @@ import { PassportModule } from "@nestjs/passport";
 import { UserModule } from "src/user/user.module";
 import { SignupJwtStrategy } from "./sighupJwt.strategy";
 import { SignupJwtService } from "./signupJwt.service";
+require("dotenv").config();
 
 @Module({
 	imports: [

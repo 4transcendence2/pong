@@ -6,6 +6,8 @@ import { SignupJwtService } from './signup_jwt/signupJwt.service';
 import { WsService } from 'src/ws/ws.service';
 import { JwtService } from '@nestjs/jwt';
 import { TempJwtService } from './temp_jwt/tempJwt.service';
+require("dotenv").config();
+
 const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 @Injectable()

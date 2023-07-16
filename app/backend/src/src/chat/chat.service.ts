@@ -11,6 +11,7 @@ import { ChatRoomUser } from './entity/chat.room.user.entity';
 import { ChatHistory } from './entity/chat.history.entity';
 import { Block } from './entity/chat.block.entity';
 import * as bcrypt from 'bcrypt';
+require("dotenv").config();
 
 
 @Injectable()

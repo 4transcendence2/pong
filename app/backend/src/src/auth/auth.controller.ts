@@ -19,7 +19,7 @@ export class AuthController {
 	// 	return await this.authService.login(code, res);
 	// }
 
-	@Get('login')
+	@Post('login')
 	async login(@Body() info: {username: string }, @Res() res: Response) {
 		return await this.authService.login(info.username, res);
 	}

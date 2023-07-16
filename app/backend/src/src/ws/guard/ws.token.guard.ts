@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, forwardRef } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
+require("dotenv").config();
 
 @Injectable()
 export class TokenGuard implements CanActivate {

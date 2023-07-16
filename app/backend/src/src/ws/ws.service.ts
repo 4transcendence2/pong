@@ -9,6 +9,7 @@ import { Type } from './ws.type';
 import { WsGateWay } from './ws.gateway';
 import { DmService } from 'src/dm/dm.service';
 import { GameService } from 'src/game/game.service';
+require("dotenv").config();
 
 interface login {
 	name: string,
