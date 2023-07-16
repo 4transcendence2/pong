@@ -26,14 +26,19 @@ function App() {
   const [isSignIn, setIsSignIn] = useState(isAuth());
 
   useEffect(() => {
-    axios.defaults.baseURL = `http://${import.meta.env.VITE_SERVER_IP}:81`;
-    if (isSignIn) axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+    // axios.defaults.baseURL = `http://${import.meta.env.VITE_SERVER_IP}:81`;
+    axios.defaults.baseURL = `http://${import.meta.env.VITE_SERVER_IP}:80`;
+    if (isSignIn)
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
   }, [isSignIn]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContext.Provider value={setIsSignIn}>
-        <main style={{ height: "100%" }}>{isSignIn ? <Auth /> : <Unauth />}</main>;
+        <main style={{ height: "100%" }}>
+          {isSignIn ? <Auth /> : <Unauth />}
+        </main>
+        ;
       </AuthContext.Provider>
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>

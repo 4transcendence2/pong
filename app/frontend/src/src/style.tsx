@@ -4,6 +4,10 @@ export const AppLayout = styled.div`
   height: 100vh;
   width: 100%;
 
+  position: absolute;
+  top: 0;
+  left: 0;
+
   display: flex;
 `;
 

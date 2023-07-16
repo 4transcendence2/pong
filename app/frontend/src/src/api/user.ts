@@ -15,30 +15,30 @@ export async function getProfile(username: string) {
 
 export type userInfoType = {
   username: string;
-  accessToken: string;
+  intraId: string;
 };
 
-export async function create(userInfo: userInfoType) {
-  try {
-    const res = await axios.post(
-      `/user/create`,
-      {
-        username: userInfo.username,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userInfo.accessToken}`,
-        },
-      },
-    );
-    return res;
-  } catch (err: unknown) {
-    if (err instanceof AxiosError && err.response) {
-      console.error(err.response);
-      return err.response;
-    }
-  }
-}
+// export async function create(userInfo: userInfoType) {
+//   try {
+//     const res = await axios.post(
+//       `/user/create`,
+//       {
+//         username: userInfo.username,
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${userInfo.accessToken}`,
+//         },
+//       }
+//     );
+//     return res;
+//   } catch (err: unknown) {
+//     if (err instanceof AxiosError && err.response) {
+//       console.error(err.response);
+//       return err.response;
+//     }
+//   }
+// }
 
 export async function getAvatar(username: string) {
   try {

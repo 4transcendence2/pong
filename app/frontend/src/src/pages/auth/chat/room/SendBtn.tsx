@@ -44,7 +44,11 @@ export default function SendBtn(props: { room: string | number }) {
   return (
     <S.Form>
       <S.Wrapper>
-        <S.Input onChange={chatInputHandler} value={chatInput} autoFocus></S.Input>
+        <S.Input
+          onChange={chatInputHandler}
+          value={chatInput}
+          autoFocus
+        ></S.Input>
         <S.SendBtn onClick={ChattingHandler} disabled={disableBtn}>
           <BsSend size={20} color="white" />
         </S.SendBtn>

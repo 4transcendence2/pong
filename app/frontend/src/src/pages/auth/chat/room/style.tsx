@@ -27,7 +27,7 @@ export const ExitBtn = styled.button`
 
 export const MainBox = styled.div`
   width: 100%;
-  height: 85%;
+  height: 82%;
   margin-top: 10px;
 `;
 
@@ -166,7 +166,8 @@ export const SendBtn = styled.button`
   border: 1px solid;
   line-height: 1.5;
   align-items: center;
-  background-color: ${(props) => (props.disabled ? `${color.lightGray}` : `${color.darkMain}`)};
+  background-color: ${(props) =>
+    props.disabled ? `${color.lightGray}` : `${color.darkMain}`};
   cursor: pointer;
 `;
 

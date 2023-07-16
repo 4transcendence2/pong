@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./style";
 import * as user from "api/user";
 import * as auth from "api/auth";
+import { AuthContext } from "hooks/context/AuthContext";
 
 type eventChangeType = React.ChangeEvent<HTMLInputElement>;
 type eventClickType = React.MouseEvent<HTMLButtonElement>;
 
-export default function signUp(props: { accessToken: string }) {
+// export default function signUp(props: { accessToken: string }) {
+export default function signUp() {
   const navigate = useNavigate();
   const [idInput, setIdInput] = useState("");
   const [formCheck, setFormCheck] = useState("");
+  const setIsSigned = useContext(AuthContext);
 
   function onIdHandler(event: eventChangeType) {
     setIdInput(event.target.value);
@@ -23,14 +26,16 @@ export default function signUp(props: { accessToken: string }) {
     if (idCheck) {
       const userInfo: user.userInfoType = {
         username: idInput,
-        accessToken: props.accessToken,
+        intraId: idInput,
+        // accessToken: props.accessToken,
       };
-      const res = await user.create(userInfo);
-      if (res && (res.status === 200 || res.status === 201)) {
+      // const res = await user.create(userInfo);
+      try {
+        const res = await auth.signup(userInfo);
         alert("회원가입 완료되었습니다.");
         navigate("/");
-      } else {
-        alert("잠시 후 다시 시도해주세요.");
+      } catch (err) {
+        if (err instanceof Error) alert(err.message);
       }
     }
   }
@@ -61,7 +66,10 @@ export default function signUp(props: { accessToken: string }) {
             <h2>닉네임 등록</h2>
             <S.InputArea>
               <S.BtnWrapper>
-                <S.FullWidthInput maxLength={10} onChange={onIdHandler}></S.FullWidthInput>
+                <S.FullWidthInput
+                  maxLength={10}
+                  onChange={onIdHandler}
+                ></S.FullWidthInput>
               </S.BtnWrapper>
             </S.InputArea>
             <S.BtnWrapper>

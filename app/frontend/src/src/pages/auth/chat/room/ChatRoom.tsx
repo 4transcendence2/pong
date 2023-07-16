@@ -32,11 +32,18 @@ export default function ChatRoom() {
   const myOper = useRef("participant");
 
   function handleChatRoom(
-    res: T.ChatData | T.HistoryData | T.ChatRoomData | T.AffectedData | T.BlockData,
+    res:
+      | T.ChatData
+      | T.HistoryData
+      | T.ChatRoomData
+      | T.AffectedData
+      | T.BlockData
   ) {
     if (res.roomId !== Number(roomId) || res.type === "chat") return;
     if (res.type === "chatRoom") {
-      const myRoomInfo = res.userList.filter((user) => user.username === getUsername())[0];
+      const myRoomInfo = res.userList.filter(
+        (user) => user.username === getUsername()
+      )[0];
       if (myRoomInfo?.owner) myOper.current = "owner";
       else if (myRoomInfo?.admin) myOper.current = "admin";
       else myOper.current = "participant";
@@ -85,7 +92,9 @@ export default function ChatRoom() {
           <SendBtn room={Number(roomId)} />
         </S.MainBox>
       </S.PageLayout>
-      <UserListContext.Provider value={{ participant, banned, blocked, myOper: myOper.current }}>
+      <UserListContext.Provider
+        value={{ participant, banned, blocked, myOper: myOper.current }}
+      >
         <RightSide />
       </UserListContext.Provider>
     </>

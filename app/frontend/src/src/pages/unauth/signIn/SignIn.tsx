@@ -16,9 +16,12 @@ export default function signIn() {
   const [accessToken, setAccessToken] = useState("");
   const [username, setUsername] = useState("");
 
-if (window.location.href === `http://${import.meta.env.VITE_SERVER_IP}/signin`) {
-    window.location.href = import.meta.env.VITE_REDIR_URL;
-  }
+  // TEST: 42 Intra OAuth2.0 인증 해제
+  // if (
+  //   window.location.href === `http://${import.meta.env.VITE_SERVER_IP}/signin`
+  // ) {
+  //   window.location.href = import.meta.env.VITE_REDIR_URL;
+  // }
 
   const oauthQuery = useQuery({
     queryKey: ["login"],
@@ -54,7 +57,7 @@ if (window.location.href === `http://${import.meta.env.VITE_SERVER_IP}/signin`) 
       } else {
         alert("잠시 후에 다시 시도해주세요.");
         navigate("/");
-      } 
+      }
     },
   });
 
@@ -78,8 +81,8 @@ if (window.location.href === `http://${import.meta.env.VITE_SERVER_IP}/signin`) 
   switch (isSign) {
     case "2fa":
       return <OtpCheck username={username} accessToken={accessToken} />;
-    case "signup":
-      return <SignUp accessToken={accessToken} />;
+    // case "signup":
+    //   return <SignUp accessToken={accessToken} />;
     default:
       return <LoadingCircle w={50} h={50} />;
   }

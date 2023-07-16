@@ -40,7 +40,6 @@ function Auth() {
   };
 
   const subListener = (res: { status: string; type: string }) => {
-    // console.log("구독", res.type);
     if (res.status === "error") {
       console.log("sub", res);
     } else {
@@ -51,7 +50,6 @@ function Auth() {
   };
 
   const unSubListener = (res: { status: string; type: string }) => {
-    // console.log("구독해제", res.type);
     if (res.status === "error") {
       console.log("unsub", res);
     }
@@ -89,7 +87,9 @@ function Auth() {
     <S.AppLayout>
       <BrowserRouter>
         <ProfileContext.Provider value={setProfileUser}>
-          <NoticeListContext.Provider value={{ notiList: noti, setNotiList: setNoti }}>
+          <NoticeListContext.Provider
+            value={{ notiList: noti, setNotiList: setNoti }}
+          >
             <ListTabBar />
             <S.HomeLayout>
               <S.LeftSideLayout>
